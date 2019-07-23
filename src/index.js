@@ -1,19 +1,22 @@
 import C from './constants'
-import { goal } from './store/reducers'
+import { errors } from './store/reducers'
 
-const state = 10
+const state = [
+  "user not authorized",
+  "server feed not found"
+]
 
 const action = {
-  type: C.SET_GOAL,
-  payload: 15
+  type: C.CLEAR_ERROR,
+  payload: 0
 }
 
-const nextState = goal(state, action)
+const nextState = errors(state, action)
 
 console.log(`
 
-  initial goal: ${state}
+  initial state: ${state}
   action: ${JSON.stringify(action)}
-  new goal: ${nextState}
+  new state: ${JSON.stringify(nextState)}
 
 `)
