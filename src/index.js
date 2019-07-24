@@ -1,22 +1,47 @@
 import C from './constants'
-import { errors } from './store/reducers'
+import appReducer from './store/reducers'
+import initialState from './initialState.json'
 
-const state = [
-  "user not authorized",
-  "server feed not found"
-]
-
-const action = {
-  type: C.CLEAR_ERROR,
-  payload: 0
-}
-
-const nextState = errors(state, action)
+let state = initialState
 
 console.log(`
 
-  initial state: ${state}
-  action: ${JSON.stringify(action)}
-  new state: ${JSON.stringify(nextState)}
+  Initial State
+  =============
+  goal: ${state.goal}
+  resorts: ${JSON.stringify(state.allSkiDays)}
+  fetching: ${state.resortNames.fetching}
+  suggestions: ${state.resortNames.suggestions}
+
+`)
+
+state = appReducer(state, {
+  type: C.SET_GOAL,
+  payload: 2
+})
+
+state = appReducer(state, {
+  type: C.ADD_DAY,
+  payload: {
+    "resort": "Mt Shasta",
+    "date": " 2019-11-05",
+    "powder": false,
+    "backcountry": true
+  }
+})
+
+state = appReducer(state, {
+  type: C.CHANGE_SUGGESTIONS,
+  payload: ["Mt Tallac", "Mt Hood", "Mt Shasta"]
+})
+
+console.log(`
+
+  Next State
+  =============
+  goal: ${state.goal}
+  resorts: ${JSON.stringify(state.allSkiDays)}
+  fetching: ${state.resortNames.fetching}
+  suggestions: ${state.resortNames.suggestions}
 
 `)
